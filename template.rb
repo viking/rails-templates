@@ -5,7 +5,7 @@ JQUERY_VERSION = "1.3.2"
 if File.exist?(local = File.expand_path(LOCAL_PATH))
   TEMPLATE_PATH = local
 else
-  TEMPLATE_PATH = REMOTE_PATH
+  TEMPLATE_PATH = "#{REMOTE_PATH}/raw/master"
 end
 
 def template_file(to)
