@@ -13,6 +13,7 @@ def template_file(to)
 end
 
 def commit(message)
+  git :add => "-u"
   git :add => "."
   git :commit => "-m '#{message}'"
 end
@@ -74,9 +75,10 @@ template_file 'test/functional/user_sessions_controller_test.rb'
 template_file 'test/functional/users_controller_test.rb'
 
 run("find . \\( -type d -empty \\) -and \\( -not -regex ./\\.git.* \\) -exec touch {}/.gitignore \\;")
+rake "db:migrate"
+rake "db:test:prepare"
+
 commit "Applied template"
 git :checkout => "-b huge"
 
-rake "db:migrate"
-rake "db:test:prepare"
 rake "test"
