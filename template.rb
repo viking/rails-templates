@@ -9,7 +9,7 @@ else
 end
 
 def template_file(to)
-  file to, open(File.expand_path("#{TEMPLATE_PATH}/#{to}")).read
+  file to, open("#{TEMPLATE_PATH}/#{to}").read
 end
 
 file '.gitignore', <<EOF
