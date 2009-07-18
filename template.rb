@@ -12,6 +12,14 @@ def template_file(to)
   file to, open("#{TEMPLATE_PATH}/#{to}").read
 end
 
+def commit(message)
+  git :add => "."
+  git :commit => "-m '#{message}'"
+end
+
+run "log/*"
+commit "Initial commit"
+
 file '.gitignore', <<EOF
 log/*.log
 db/*.sqlite3
@@ -31,6 +39,11 @@ file "public/javascripts/jquery-#{JQUERY_VERSION}.js" do
 end
 
 gem :authlogic
+with_options :source => "http://gems.github.com" do |github|
+  github.gem 'thoughtbot-factory_girl', :lib => 'factory_girl'
+  github.gem 'sevenwire-forgery',       :lib => 'forgery'
+end
+
 generate :session, 'user_session'
 generate :model, 'user',
   'login:string', 'email:string', 'crypted_password:string',
@@ -50,18 +63,17 @@ template_file 'app/controllers/application_controller.rb'
 template_file 'app/controllers/user_sessions_controller.rb'
 template_file 'app/controllers/users_controller.rb'
 template_file 'app/views/user_sessions/new.html.erb'
-template_file 'test/fixtures/users.yml'
-template_file 'test/functional/user_sessions_controller_test.rb'
-template_file 'test/functional/users_controller_test.rb'
 template_file 'app/views/users/new.html.erb'
 template_file 'app/views/users/edit.html.erb'
 template_file 'app/views/users/show.html.erb'
 template_file 'app/views/users/_form.html.erb'
+template_file 'public/stylesheets/style.css'
+template_file 'test/factories.rb'
+template_file 'test/functional/user_sessions_controller_test.rb'
+template_file 'test/functional/users_controller_test.rb'
 
 run("find . \\( -type d -empty \\) -and \\( -not -regex ./\\.git.* \\) -exec touch {}/.gitignore \\;")
-git :init
-git :add => "."
-git :commit => "-m 'Initial commit'"
+commit "Applied template"
 git :checkout => "-b huge"
 
 rake "db:migrate"

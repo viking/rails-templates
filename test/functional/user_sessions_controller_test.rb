@@ -7,9 +7,10 @@ class UserSessionsControllerTest < ActionController::TestCase
   end
 
   test "should create user session" do
-    post :create, :user_session => { :login => "zaphod", :password => "fortytwo" }
+    user = Factory.create(:user)
+    post :create, :user_session => { :login => user.login, :password => "secret" }
     assert user_session = UserSession.find
-    assert_equal users(:zaphod), user_session.user
+    assert_equal user, user_session.user
     assert_redirected_to account_path
   end
 
