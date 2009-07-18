@@ -17,7 +17,8 @@ def commit(message)
   git :commit => "-m '#{message}'"
 end
 
-run "log/*"
+run "rm -f log/*"
+git :init
 commit "Initial commit"
 
 file '.gitignore', <<EOF
