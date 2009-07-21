@@ -1,0 +1,4 @@
+Rails template with test/unit, authlogic, factory-girl, and forgery.
+
+Cheers to sevenwire (http://github.com/sevenwire/rails_templates) for
+much of template.rb.
