@@ -8,8 +8,9 @@ else
   TEMPLATE_PATH = "#{REMOTE_PATH}/raw/master"
 end
 
-def template_file(to)
-  file to, open("#{TEMPLATE_PATH}/#{to}").read
+def template_file(to, erb_pass = false, b = binding)
+  contents = open("#{TEMPLATE_PATH}/#{to}").read
+  file to, (erb_pass ? ERB.new(contents).result(b) : contents)
 end
 
 def commit(message)
@@ -36,7 +37,7 @@ end
 run "rm public/index.html"
 run "cp config/database.yml config/database.yml.sample"
 
-file "public/javascripts/jquery-#{JQUERY_VERSION}.js" do
+file "public/javascripts/jquery-#{JQUERY_VERSION}.min.js" do
   open("http://jqueryjs.googlecode.com/files/jquery-#{JQUERY_VERSION}.min.js").read
 end
 
@@ -73,6 +74,8 @@ template_file 'public/stylesheets/style.css'
 template_file 'test/factories.rb'
 template_file 'test/functional/user_sessions_controller_test.rb'
 template_file 'test/functional/users_controller_test.rb'
+
+template_file 'app/views/layouts/application.html.erb', true
 
 run("find . \\( -type d -empty \\) -and \\( -not -regex ./\\.git.* \\) -exec touch {}/.gitignore \\;")
 rake "db:migrate"
