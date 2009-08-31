@@ -42,9 +42,12 @@ file "public/javascripts/jquery-#{JQUERY_VERSION}.min.js" do
 end
 
 gem :authlogic
+
+environment "require 'test/unit'", :env => 'test'
+gem :mocha, :env => 'test'
 with_options :source => "http://gems.github.com" do |github|
-  github.gem 'thoughtbot-factory_girl', :lib => 'factory_girl'
-  github.gem 'sevenwire-forgery',       :lib => 'forgery'
+  github.gem 'thoughtbot-factory_girl', :lib => 'factory_girl', :env => 'test'
+  github.gem 'sevenwire-forgery',       :lib => 'forgery',      :env => 'test'
 end
 
 generate :session, 'user_session'

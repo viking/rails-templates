@@ -1,8 +1,8 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
-  setup do
-    setup :activate_authlogic
+  def setup
+    activate_authlogic
   end
 
   test "should get new" do
