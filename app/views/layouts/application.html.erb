@@ -5,14 +5,16 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title><%%= controller.controller_name.titleize %>: <%%= controller.action_name %></title>
-  <%%= stylesheet_link_tag 'style' %>
+  <%%= stylesheet_link_tag 'reset', 'text', '960', 'style' %>
   <%%= javascript_include_tag 'jquery-<%= JQUERY_VERSION %>.min' %>
 </head>
 <body>
-
-<p style="color: green"><%%= flash[:notice] %></p>
-
-<%%= yield %>
-
+  <div id="main" class="container_16">
+    <div id="content" class="grid_16">
+      <p style="color: green"><%%= flash[:notice] %></p>
+      <%%= yield %>
+    </div>
+    <div class="clear"></div>
+  </div>
 </body>
 </html>

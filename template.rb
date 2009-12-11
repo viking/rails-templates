@@ -41,6 +41,12 @@ file "public/javascripts/jquery-#{JQUERY_VERSION}.min.js" do
   open("http://jqueryjs.googlecode.com/files/jquery-#{JQUERY_VERSION}.min.js").read
 end
 
+%w{960 reset text}.each do |name|
+  file "public/stylesheets/#{name}.css" do
+    open("http://bitbucket.org/nathansmith/960-grid-system/raw/tip/code/css/#{name}.css").read
+  end
+end
+
 gem :authlogic
 
 environment "require 'test/unit'", :env => 'test'
